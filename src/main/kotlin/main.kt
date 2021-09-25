@@ -1,3 +1,4 @@
 fun main(args: Array<String>) {
-    TODO()
+    startDatabase()
+    startOperation(args)
 }
