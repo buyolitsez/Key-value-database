@@ -58,41 +58,50 @@ fun uploadPartDatabase() {
 }
 
 fun containsDB(key: String) {
-
+    TODO()
 }
 
 fun getDB(key: String) {
+    TODO()
 
 }
 
 fun setDB(key: String, value: String) {
+    TODO()
 
 }
 
 fun removeDB(key: String) {
+    TODO()
 
 }
 
 fun sizeDB() {
+    TODO()
 
 }
 
 fun isEmptyDB() {
+    TODO()
 
 }
 
 fun clearDB() {
+    TODO()
 
 }
 
 fun entriesDB() {
+    TODO()
 
 }
 
 fun keysDB() {
+    TODO()
 
 }
 
 fun valuesDB() {
+    TODO()
 
 }
