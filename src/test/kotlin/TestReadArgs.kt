@@ -3,36 +3,36 @@ import kotlin.test.*
 internal class TestReadArgs {
 
     @Test
-    fun testFind() {
+    fun testGet() {
         assertEquals(
-            readArgs(arrayOf("find", "a")),
-            Operation("find", "a", "")
+            readArgs(listOf("get", "a")),
+            Operation("get", getHash("a"), "")
         )
 
         assertEquals(
-            readArgs(arrayOf("find", "Ab1")),
-            Operation("find", "Ab1", "")
+            readArgs(listOf("get", "Ab1")),
+            Operation("get", getHash("Ab1"), "")
         )
     }
 
     @Test
     fun testChange() {
         assertEquals(
-            readArgs(arrayOf("change", "a", "b")),
-            Operation("change", "a", "b")
+            readArgs(listOf("set", "a", "b")),
+            Operation("set", getHash("a"), "b")
         )
 
         assertEquals(
-            readArgs(arrayOf("change", "Ab1", "B23ea")),
-            Operation("change", "Ab1", "B23ea")
+            readArgs(listOf("set", "Ab1", "B23ea")),
+            Operation("set", getHash("Ab1"), "B23ea")
         )
     }
 
     @Test
     fun testIsEmpty() {
         assertEquals(
-            readArgs(arrayOf("is-empty")),
-            Operation("is-empty", "", "")
+            readArgs(listOf("is-empty")),
+            Operation("is-empty", getHash(""), "")
         )
     }
 }

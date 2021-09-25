@@ -14,11 +14,18 @@ fun startDatabase() {
 
 /** calculate number of files and write it into [TOTAL_COUNT_OF_FILES]*/
 fun calculateNumberOfFiles() {
-    TOTAL_COUNT_OF_FILES = File("data/").list().size
+    if (!File(PATH_DATA_DIRECTORY).exists()) {
+        File(PATH_DATA_DIRECTORY).mkdir()
+    }
+    TOTAL_COUNT_OF_FILES = File(PATH_DATA_DIRECTORY).list().size
+    if (TOTAL_COUNT_OF_FILES == 0) {
+        CURRENT_FILE = 1
+        TOTAL_COUNT_OF_FILES = 1
+    }
 }
 
 fun getFileByNum(num: Int): File {
-    val file = File("data/$num")
+    val file = File("$PATH_DATA_DIRECTORY$num")
     if (!file.exists()) {
         file.createNewFile()
     }
@@ -146,6 +153,7 @@ fun isEmptyDB() {
     do {
         if (data.isNotEmpty()) {
             println("false")
+            return
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)

@@ -12,7 +12,9 @@ val FUNCTIONS = mapOf(
 )
 
 /** Separator in every file*/
-val SEPARATOR = '='
+var SEPARATOR = '='
 
 /** The count of lines in each file less than [MAX_RECORDS_FILE]*/
-val MAX_RECORDS_FILE = 3
+var MAX_RECORDS_FILE = 3
+
+var PATH_DATA_DIRECTORY = "data/"
