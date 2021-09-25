@@ -14,20 +14,25 @@ You can run the program with the command <br>
 ./gradlew run --args="[OPTIONS]"
 ```
 
-## DESCRIPTION
+For example ```./gradlew run --args="find |YOUR KEY"``` or
 
-    
+```./gradlew run --args="change |KEY|VALUE"``` or
+
+```./gradlew run --args="size"```
+
 
 ---
 
 ## List of options
 
-+ ```find "[KEY]"``` - output ```Can't find key``` if key doesn't exist, or the value of key.
-+ ```change "[KEY]" "[VALUE]"``` - set the value of KEY to VALUE.
-+ ```delete "[KEY]"``` - delete cell with KEY.
-+ ```print``` - output all database in random order.
++ ```contains [KEY]``` - checks if the database contains the given key(true or false).
++ ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
++ ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
++ ```remove [KEY]``` - Removes the specified KEY and its corresponding value from this map.
 + ```size``` - output size of database.
 + ```is-empty``` - output 1 or 0, is database empty or not respectively.
-+ ```clear``` - reset all data
-+ ```rehash``` - recalculate hash values of database.
++ ```clear``` - removes all elements from database.
++ ```entries``` - output all key/value pairs in database.
++ ```keys``` - output all keys in database.
++ ```values``` - output all values in database.
 ---
