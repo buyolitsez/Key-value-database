@@ -35,7 +35,5 @@ where KEY and VALUE is a strings
 + ```size``` - output size of database.
 + ```is-empty``` - output 1 or 0, is database empty or not respectively.
 + ```clear``` - removes all elements from database.
-+ ```entries``` - output all key/value pairs in database.
-+ ```keys``` - output all keys in database.
 + ```values``` - output all values in database.
 ---
