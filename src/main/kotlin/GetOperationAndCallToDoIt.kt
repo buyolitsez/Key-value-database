@@ -3,12 +3,12 @@
  * @property key is a key when it needed or empty string when not.
  * @property value is a value when it needed or empty string when not.
  */
-data class Operation(var nameOperation : String, val key : ULong, val value : String)
+data class Operation(var nameOperation: String, val key: ULong, val value: String)
 
 /** Read command and values from run args
  * @property args run args
  */
-fun readArgs(args: Array<String>): Operation {
+fun readArgs(args: List<String>): Operation {
     if (args.isEmpty()) {
         throwError("No args")
     }
@@ -33,22 +33,28 @@ fun readArgs(args: Array<String>): Operation {
     return Operation(nameOperation, getHash(key), value)
 }
 
-/**
- * Call function [readArgs] and then call needed function
- * @property args run args
- */
-fun startOperation(args : Array<String>) {
-    val operation = readArgs(args)
-    when(operation.nameOperation) {
-        "contains" -> containsDB(operation.key)
-        "get" -> getDB(operation.key)
-        "set" -> setDB(operation.key, operation.value)
-        "remove" -> removeDB(operation.key)
-        "size" -> sizeDB()
-        "is-empty" -> isEmptyDB()
-        "clear" -> clearDB()
-        "entries" -> entriesDB()
-        "keys" -> keysDB()
-        "values" -> valuesDB()
+/** Just read commands and do it */
+
+fun startOperation() {
+    var str: String?
+    while (true) {
+        str = readLine()
+        if (str == null) {
+            continue
+        }
+        val args = str.split(' ').filter { it.isNotBlank() }
+        val operation = readArgs(args)
+        when (operation.nameOperation) {
+            "exit" -> exitDB()
+            "contains" -> containsDB(operation.key)
+            "get" -> getDB(operation.key)
+            "set" -> setDB(operation.key, operation.value)
+            "remove" -> removeDB(operation.key)
+            "size" -> sizeDB()
+            "is-empty" -> isEmptyDB()
+            "clear" -> clearDB()
+            "values" -> valuesDB()
+            else -> throwError("Forgot to add function")
+        }
     }
 }
