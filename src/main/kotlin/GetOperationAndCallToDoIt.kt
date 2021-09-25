@@ -3,7 +3,7 @@
  * @property key is a key when it needed or empty string when not.
  * @property value is a value when it needed or empty string when not.
  */
-data class Operation(var nameOperation : String, val key : String, val value : String)
+data class Operation(var nameOperation : String, val key : ULong, val value : String)
 
 /** Read command and values from run args
  * @property args run args
@@ -27,7 +27,10 @@ fun readArgs(args: Array<String>): Operation {
     if (args.size > 2) {
         value = args[2]
     }
-    return Operation(nameOperation, key, value)
+    if (key.contains(SEPARATOR) || value.contains(SEPARATOR)) {
+        throwError("Key and value cant contain separator $SEPARATOR\n")
+    }
+    return Operation(nameOperation, getHash(key), value)
 }
 
 /**
@@ -36,9 +39,6 @@ fun readArgs(args: Array<String>): Operation {
  */
 fun startOperation(args : Array<String>) {
     val operation = readArgs(args)
-    if (operation.key.contains(SEPARATOR) || operation.value.contains(SEPARATOR)) {
-        throwError("Key and value cant contain separator $SEPARATOR\n")
-    }
     when(operation.nameOperation) {
         "contains" -> containsDB(operation.key)
         "get" -> getDB(operation.key)
