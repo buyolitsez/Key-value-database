@@ -9,22 +9,25 @@
 
 ## Using
 
-You can run the program with the command <br>
-``` #bash
-./gradlew run --args="[OPTIONS]"
-```
+You can run the program only with IDE
 
-For example ```./gradlew run --args="find |YOUR KEY"``` or
+Then you should write commands
 
-```./gradlew run --args="change |KEY|VALUE"``` or
+For example
 
-```./gradlew run --args="size"```
+```find KEY``` or
 
+```change KEY VALUE``` or
+
+```size```
+
+where KEY and VALUE is a strings
 
 ---
 
 ## List of options
 
++ ```exit``` - exit from database interface
 + ```contains [KEY]``` - checks if the database contains the given key(true or false).
 + ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
 + ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
