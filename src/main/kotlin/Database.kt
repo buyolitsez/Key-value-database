@@ -83,7 +83,7 @@ fun getNextPart() {
 }
 
 fun exitDB() {
-    println("End")
+    OutputString("End")
     uploadPartDatabase()
     exitProcess(0)
 }
@@ -92,24 +92,24 @@ fun containsDB(key: ULong) {
     val startNum = CURRENT_FILE
     do {
         if (data.contains(key)) {
-            println("true")
+            OutputString("true")
             return
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)
-    println("false")
+    OutputString("false")
 }
 
 fun getDB(key: ULong) {
     val startNum = CURRENT_FILE
     do {
         if (data.contains(key)) {
-            println(data[key])
+            OutputString(data[key].toString())
             return
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)
-    println("No such key")
+    OutputString("No such key")
 }
 
 fun setDB(key: ULong, value: String) {
@@ -153,19 +153,19 @@ fun sizeDB() {
         totalSize += data.size.toULong()
         getNextPart()
     } while (CURRENT_FILE != startNum)
-    println(totalSize)
+    OutputString(totalSize.toString())
 }
 
 fun isEmptyDB() {
     val startNum = CURRENT_FILE
     do {
         if (data.isNotEmpty()) {
-            println("false")
+            OutputString("false")
             return
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)
-    println("true")
+    OutputString("true")
 }
 
 fun clearDB() {
@@ -180,7 +180,7 @@ fun valuesDB() {
     val startNum = CURRENT_FILE
     do {
         for ((_, value) in data) {
-            println(value)
+            OutputString(value)
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)
