@@ -114,10 +114,18 @@ fun getDB(key: ULong) {
 
 fun setDB(key: ULong, value: String) {
     val startNum = CURRENT_FILE
+    // Try to find key
     do {
         if (data.contains(key)) {
             data[key] = value
             return
+        }
+        getNextPart()
+    } while (CURRENT_FILE != startNum)
+    // Try to find not empty data
+    do {
+        if (data.size != MAX_RECORDS_FILE - 1) {
+            break
         }
         getNextPart()
     } while (CURRENT_FILE != startNum)
