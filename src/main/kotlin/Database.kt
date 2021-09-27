@@ -89,17 +89,17 @@ class Database() {
      * After 2 part is a 3 part
      * After 3 part is a 1 part
      */
-    fun getNextPart() {
+    private fun getNextPart() {
         loadPartDatabaseFromFile(CURRENT_FILE % TOTAL_COUNT_OF_FILES + 1)
     }
 
-    fun exitDB() {
+    fun exit() {
         OutputString("End")
         uploadPartDatabase()
         exitProcess(0)
     }
 
-    fun containsDB(key: ULong) {
+    fun contains(key: ULong) {
         val startNum = CURRENT_FILE
         do {
             if (data.contains(key)) {
@@ -111,7 +111,7 @@ class Database() {
         OutputString("false")
     }
 
-    fun getDB(key: ULong) {
+    fun get(key: ULong) {
         val startNum = CURRENT_FILE
         do {
             if (data.contains(key)) {
@@ -123,7 +123,7 @@ class Database() {
         OutputString("No such key")
     }
 
-    fun setDB(key: ULong, value: String) {
+    fun set(key: ULong, value: String) {
         val startNum = CURRENT_FILE
         // Try to find key
         do {
@@ -146,7 +146,7 @@ class Database() {
         data[key] = value
     }
 
-    fun removeDB(key: ULong) {
+    fun remove(key: ULong) {
         val startNum = CURRENT_FILE
         do {
             if (data.contains(key)) {
@@ -157,7 +157,7 @@ class Database() {
         } while (CURRENT_FILE != startNum)
     }
 
-    fun sizeDB() {
+    fun size() {
         var totalSize: ULong = 0.toULong()
         val startNum = CURRENT_FILE
         do {
@@ -167,7 +167,7 @@ class Database() {
         OutputString(totalSize.toString())
     }
 
-    fun isEmptyDB() {
+    fun isEmpty() {
         val startNum = CURRENT_FILE
         do {
             if (data.isNotEmpty()) {
@@ -179,7 +179,7 @@ class Database() {
         OutputString("true")
     }
 
-    fun clearDB() {
+    fun clear() {
         val startNum = CURRENT_FILE
         do {
             data.clear()
@@ -187,7 +187,7 @@ class Database() {
         } while (CURRENT_FILE != startNum)
     }
 
-    fun valuesDB() {
+    fun values() {
         val startNum = CURRENT_FILE
         do {
             for ((_, value) in data) {
@@ -197,3 +197,4 @@ class Database() {
         } while (CURRENT_FILE != startNum)
     }
 }
+
