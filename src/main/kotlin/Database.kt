@@ -2,12 +2,16 @@ import java.io.File
 import java.io.InputStream
 import kotlin.system.exitProcess
 
+
 // 0 means that data is not loaded
 var CURRENT_FILE = 0
 var data = HashMap<ULong, String>()
 var TOTAL_COUNT_OF_FILES = 0
 
 fun startDatabase() {
+    if (PATH_DATA_DIRECTORY.last() != '/') {
+        PATH_DATA_DIRECTORY += "/"
+    }
     calculateNumberOfFiles()
     loadPartDatabaseFromFile(1)
 }
@@ -21,7 +25,7 @@ fun calculateNumberOfFiles() {
     }
     TOTAL_COUNT_OF_FILES = File(PATH_DATA_DIRECTORY).list().size
     if (TOTAL_COUNT_OF_FILES == 0) {
-        CURRENT_FILE = 1
+        CURRENT_FILE = 0
         TOTAL_COUNT_OF_FILES = 1
     }
 }
@@ -66,7 +70,7 @@ fun uploadPartDatabase() {
     val file = getFileByNum(CURRENT_FILE)
     val output = StringBuilder()
     for ((key, value) in data) {
-        output.append("$key=$value\n")
+        output.append("$key$SEPARATOR$value\n")
     }
     file.writeText(output.toString())
     CURRENT_FILE = 0
