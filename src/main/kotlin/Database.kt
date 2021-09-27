@@ -12,7 +12,9 @@ fun startDatabase() {
     loadPartDatabaseFromFile(1)
 }
 
-/** calculate number of files and write it into [TOTAL_COUNT_OF_FILES]*/
+/** calculate number of files and write it into [TOTAL_COUNT_OF_FILES]
+ * If there is no files, we suppose that there is one
+ */
 fun calculateNumberOfFiles() {
     if (!File(PATH_DATA_DIRECTORY).exists()) {
         File(PATH_DATA_DIRECTORY).mkdir()
