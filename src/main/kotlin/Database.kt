@@ -96,7 +96,6 @@ class Database() {
     fun exit() {
         OutputString("End")
         uploadPartDatabase()
-        exitProcess(0)
     }
 
     fun contains(key: ULong) {
