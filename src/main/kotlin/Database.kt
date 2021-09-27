@@ -23,10 +23,14 @@ fun calculateNumberOfFiles() {
     if (!File(PATH_DATA_DIRECTORY).exists()) {
         File(PATH_DATA_DIRECTORY).mkdir()
     }
-    TOTAL_COUNT_OF_FILES = File(PATH_DATA_DIRECTORY).list().size
-    if (TOTAL_COUNT_OF_FILES == 0) {
-        CURRENT_FILE = 0
-        TOTAL_COUNT_OF_FILES = 1
+    if (File(PATH_DATA_DIRECTORY).list() == null) {
+        throwError("Cant calculate number of files in $PATH_DATA_DIRECTORY")
+    } else {
+        TOTAL_COUNT_OF_FILES = File(PATH_DATA_DIRECTORY).list()!!.size
+        if (TOTAL_COUNT_OF_FILES == 0) {
+            CURRENT_FILE = 0
+            TOTAL_COUNT_OF_FILES = 1
+        }
     }
 }
 
