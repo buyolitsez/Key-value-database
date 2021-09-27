@@ -2,7 +2,7 @@ import kotlin.test.*
 
 internal class TestLoadPartDatabaseFromFile {
     @AfterTest
-    fun setAll() = run{
+    fun setAll() = run {
         setDefaultValues()
     }
 

@@ -11,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.21")
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.5.21")
 }
 
 tasks.getByName<Test>("test") {

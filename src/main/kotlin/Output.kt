@@ -1,3 +1,3 @@
-fun OutputString(str : String) {
+fun outputString(str: String) {
     println(str)
 }

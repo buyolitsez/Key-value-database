@@ -2,7 +2,7 @@ import kotlin.test.*
 
 internal class TestCalculateNumberOfFiles {
     @AfterTest
-    fun setAll() = run{
+    fun setAll() = run {
         setDefaultValues()
     }
 
@@ -11,7 +11,7 @@ internal class TestCalculateNumberOfFiles {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test0Files"
         val localDB = Database()
         localDB.calculateNumberOfFiles()
-        assertEquals(1, localDB.TOTAL_COUNT_OF_FILES)
+        assertEquals(1, localDB.totalCountOfFiles)
         localDB.exit()
     }
 
@@ -20,7 +20,7 @@ internal class TestCalculateNumberOfFiles {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test1File"
         val localDB = Database()
         localDB.calculateNumberOfFiles()
-        assertEquals(1, localDB.TOTAL_COUNT_OF_FILES)
+        assertEquals(1, localDB.totalCountOfFiles)
         localDB.exit()
     }
 
@@ -29,7 +29,7 @@ internal class TestCalculateNumberOfFiles {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test2Files"
         val localDB = Database()
         localDB.calculateNumberOfFiles()
-        assertEquals(2, localDB.TOTAL_COUNT_OF_FILES)
+        assertEquals(2, localDB.totalCountOfFiles)
         localDB.exit()
     }
 
@@ -38,7 +38,7 @@ internal class TestCalculateNumberOfFiles {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test100Files"
         val localDB = Database()
         localDB.calculateNumberOfFiles()
-        assertEquals(100, localDB.TOTAL_COUNT_OF_FILES)
+        assertEquals(100, localDB.totalCountOfFiles)
         localDB.exit()
     }
 }

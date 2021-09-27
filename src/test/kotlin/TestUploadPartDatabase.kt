@@ -3,14 +3,14 @@ import kotlin.test.*
 
 internal class TestUploadPartDatabase {
     @BeforeTest
-    fun setConstants() = run{
+    fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestUploadPartDatabase/"
         MAX_RECORDS_FILE = 5
         File("${PATH_DATA_DIRECTORY}1").writeText("") // Clear output file
     }
 
     @AfterTest
-    fun setAll() = run{
+    fun setAll() = run {
         setDefaultValues()
     }
 
@@ -47,7 +47,8 @@ internal class TestUploadPartDatabase {
         assertEquals(
             File("${PATH_DATA_DIRECTORY}1").readText(), "3|5==\n" +
                     "5|2=\n" +
-                    "32432432|a=\n")
+                    "32432432|a=\n"
+        )
         localDB.exit()
     }
 }

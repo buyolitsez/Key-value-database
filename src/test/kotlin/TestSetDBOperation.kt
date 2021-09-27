@@ -3,13 +3,13 @@ import kotlin.test.*
 
 internal class TestSetDBOperation {
     @BeforeTest
-    fun setConstants() = run{
+    fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestSetDBOperation/"
         MAX_RECORDS_FILE = 5
     }
 
     @AfterTest
-    fun setAll() = run{
+    fun setAll() = run {
         setDefaultValues()
     }
 

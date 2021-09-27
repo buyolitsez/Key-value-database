@@ -1,6 +1,5 @@
 import java.io.File
 import java.io.InputStream
-import kotlin.system.exitProcess
 
 /** Return file from it number */
 fun getFileByNum(num: Int): File {
@@ -11,12 +10,13 @@ fun getFileByNum(num: Int): File {
     return file
 }
 
-class Database() {
+class Database {
     // 0 means that data is not loaded
-    var CURRENT_FILE = 0
+    private var currentFile = 0
     var data = HashMap<ULong, String>()
-    var TOTAL_COUNT_OF_FILES = 0
-    init{
+    var totalCountOfFiles = 0
+
+    init {
         if (PATH_DATA_DIRECTORY.last() != '/') {
             PATH_DATA_DIRECTORY += "/"
         }
@@ -24,7 +24,7 @@ class Database() {
         loadPartDatabaseFromFile(1)
     }
 
-    /** calculate number of files and write it into [TOTAL_COUNT_OF_FILES]
+    /** calculate number of files and write it into [totalCountOfFiles]
      * If there is no files, we suppose that there is one
      */
     fun calculateNumberOfFiles() {
@@ -34,26 +34,26 @@ class Database() {
         if (File(PATH_DATA_DIRECTORY).list() == null) {
             throwError("Cant calculate number of files in $PATH_DATA_DIRECTORY")
         } else {
-            TOTAL_COUNT_OF_FILES = File(PATH_DATA_DIRECTORY).list()!!.size
-            if (TOTAL_COUNT_OF_FILES == 0) {
-                CURRENT_FILE = 0
-                TOTAL_COUNT_OF_FILES = 1
+            totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
+            if (totalCountOfFiles == 0) {
+                currentFile = 0
+                totalCountOfFiles = 1
             }
         }
     }
 
     /** Create new database file */
-    fun createNewPart() {
+    private fun createNewPart() {
         uploadPartDatabase()
-        TOTAL_COUNT_OF_FILES++
-        loadPartDatabaseFromFile(TOTAL_COUNT_OF_FILES)
+        totalCountOfFiles++
+        loadPartDatabaseFromFile(totalCountOfFiles)
     }
 
     /** Load database part of database with number [num]*/
     fun loadPartDatabaseFromFile(num: Int) {
         uploadPartDatabase()
         val file = getFileByNum(num)
-        CURRENT_FILE = num
+        currentFile = num
         val inputStream: InputStream = file.inputStream()
         inputStream.bufferedReader().forEachLine { str ->
             if (str.count { it == SEPARATOR } != 1) {
@@ -67,18 +67,18 @@ class Database() {
         }
     }
 
-    /** Upload database part [data] to file with number [CURRENT_FILE]*/
+    /** Upload database part [data] to file with number [currentFile]*/
     fun uploadPartDatabase() {
-        if (CURRENT_FILE == 0) {
+        if (currentFile == 0) {
             return
         }
-        val file = getFileByNum(CURRENT_FILE)
+        val file = getFileByNum(currentFile)
         val output = StringBuilder()
         for ((key, value) in data) {
             output.append("$key$SEPARATOR$value\n")
         }
         file.writeText(output.toString())
-        CURRENT_FILE = 0
+        currentFile = 0
         data.clear()
     }
 
@@ -90,40 +90,40 @@ class Database() {
      * After 3 part is a 1 part
      */
     private fun getNextPart() {
-        loadPartDatabaseFromFile(CURRENT_FILE % TOTAL_COUNT_OF_FILES + 1)
+        loadPartDatabaseFromFile(currentFile % totalCountOfFiles + 1)
     }
 
     fun exit() {
-        OutputString("End")
+        outputString("End")
         uploadPartDatabase()
     }
 
     fun contains(key: ULong) {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             if (data.contains(key)) {
-                OutputString("true")
+                outputString("true")
                 return
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
-        OutputString("false")
+        } while (currentFile != startNum)
+        outputString("false")
     }
 
     fun get(key: ULong) {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             if (data.contains(key)) {
-                OutputString(data[key].toString())
+                outputString(data[key].toString())
                 return
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
-        OutputString("No such key")
+        } while (currentFile != startNum)
+        outputString("No such key")
     }
 
     fun set(key: ULong, value: String) {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         // Try to find key
         do {
             if (data.contains(key)) {
@@ -131,14 +131,14 @@ class Database() {
                 return
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
+        } while (currentFile != startNum)
         // Try to find not empty data
         do {
             if (data.size != MAX_RECORDS_FILE - 1) {
                 break
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
+        } while (currentFile != startNum)
         if (data.size == MAX_RECORDS_FILE - 1) {
             createNewPart()
         }
@@ -146,54 +146,54 @@ class Database() {
     }
 
     fun remove(key: ULong) {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             if (data.contains(key)) {
                 data.remove(key)
                 return
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
+        } while (currentFile != startNum)
     }
 
     fun size() {
         var totalSize: ULong = 0.toULong()
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             totalSize += data.size.toULong()
             getNextPart()
-        } while (CURRENT_FILE != startNum)
-        OutputString(totalSize.toString())
+        } while (currentFile != startNum)
+        outputString(totalSize.toString())
     }
 
     fun isEmpty() {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             if (data.isNotEmpty()) {
-                OutputString("false")
+                outputString("false")
                 return
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
-        OutputString("true")
+        } while (currentFile != startNum)
+        outputString("true")
     }
 
     fun clear() {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             data.clear()
             getNextPart()
-        } while (CURRENT_FILE != startNum)
+        } while (currentFile != startNum)
     }
 
     fun values() {
-        val startNum = CURRENT_FILE
+        val startNum = currentFile
         do {
             for ((_, value) in data) {
-                OutputString(value)
+                outputString(value)
             }
             getNextPart()
-        } while (CURRENT_FILE != startNum)
+        } while (currentFile != startNum)
     }
 }
 
