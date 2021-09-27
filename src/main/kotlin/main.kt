@@ -1,4 +1,5 @@
+val db = Database()
+
 fun main() {
-    startDatabase()
     startOperation()
 }

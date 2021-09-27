@@ -45,15 +45,15 @@ fun startOperation() {
         val args = str.split(' ').filter { it.isNotBlank() }
         val operation = readArgs(args)
         when (operation.nameOperation) {
-            "exit" -> exitDB()
-            "contains" -> containsDB(operation.key)
-            "get" -> getDB(operation.key)
-            "set" -> setDB(operation.key, operation.value)
-            "remove" -> removeDB(operation.key)
-            "size" -> sizeDB()
-            "is-empty" -> isEmptyDB()
-            "clear" -> clearDB()
-            "values" -> valuesDB()
+            "exit" -> db.exitDB()
+            "contains" -> db.containsDB(operation.key)
+            "get" -> db.getDB(operation.key)
+            "set" -> db.setDB(operation.key, operation.value)
+            "remove" -> db.removeDB(operation.key)
+            "size" -> db.sizeDB()
+            "is-empty" -> db.isEmptyDB()
+            "clear" -> db.clearDB()
+            "values" -> db.valuesDB()
             else -> throwError("Forgot to add function")
         }
     }
