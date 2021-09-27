@@ -63,6 +63,7 @@ build/
 .idea/misc.xml
 .idea/vcs.xml
 .idea/.gitignore
+.idea/uiDesigner.xml
 node_modules/
 .rpt2_cache/
 libraries/tools/kotlin-test-js-runner/lib/
