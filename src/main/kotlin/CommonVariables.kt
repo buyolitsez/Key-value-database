@@ -18,3 +18,9 @@ var SEPARATOR = '='
 var MAX_RECORDS_FILE = 3
 
 var PATH_DATA_DIRECTORY = "data/"
+
+fun setDefaultValues() {
+    SEPARATOR = '='
+    MAX_RECORDS_FILE = 3
+    PATH_DATA_DIRECTORY = "data/"
+}
