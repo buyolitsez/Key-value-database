@@ -3,46 +3,51 @@ import kotlin.test.*
 
 internal class TestUploadPartDatabase {
     @BeforeTest
-    fun getNullData() = run {
+    fun setConstants() = run{
         PATH_DATA_DIRECTORY = "testData/TestUploadPartDatabase/"
         MAX_RECORDS_FILE = 5
-        calculateNumberOfFiles()
-        getNextPart()
+        File("${PATH_DATA_DIRECTORY}1").writeText("") // Clear output file
     }
 
     @AfterTest
-    fun setAllBack() = run{
-        SEPARATOR = '='
+    fun setAll() = run{
+        setDefaultValues()
     }
 
     @Test
     fun testEmptyData() {
-        data = hashMapOf()
-        uploadPartDatabase()
+        val localDB = Database()
+        localDB.data = hashMapOf()
+        localDB.uploadPartDatabase()
         assertEquals(
             File("${PATH_DATA_DIRECTORY}1").readText(), ""
         )
+        localDB.exit()
     }
 
     @Test
     fun testDataWithStandardSeparator() {
-        data = hashMapOf(5.toULong() to "2", 7.toULong() to "a", 3.toULong() to "5")
-        uploadPartDatabase()
+        val localDB = Database()
+        localDB.data = hashMapOf(5.toULong() to "2", 7.toULong() to "a", 3.toULong() to "5")
+        localDB.uploadPartDatabase()
         assertEquals(
             File("${PATH_DATA_DIRECTORY}1").readText(), "3=5\n" +
                     "5=2\n" +
                     "7=a\n"
         )
+        localDB.exit()
     }
 
     @Test
     fun testDataWithOddSeparator() {
-        data = hashMapOf(5.toULong() to "2=", 32432432.toULong() to "a=", 3.toULong() to "5==")
+        val localDB = Database()
         SEPARATOR = '|'
-        uploadPartDatabase()
+        localDB.data = hashMapOf(5.toULong() to "2=", 32432432.toULong() to "a=", 3.toULong() to "5==")
+        localDB.uploadPartDatabase()
         assertEquals(
             File("${PATH_DATA_DIRECTORY}1").readText(), "3|5==\n" +
                     "5|2=\n" +
                     "32432432|a=\n")
+        localDB.exit()
     }
 }
