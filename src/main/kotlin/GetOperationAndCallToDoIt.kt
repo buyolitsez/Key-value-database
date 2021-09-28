@@ -46,7 +46,7 @@ fun startOperation() {
         val operation = readArgs(args)
         when (operation.nameOperation) {
             "exit" -> db.exit()
-            "contains" -> db.contains(operation.key)
+            "containsKey" -> db.containsKey(operation.key)
             "get" -> db.get(operation.key)
             "set" -> db.set(operation.key, operation.value)
             "remove" -> db.remove(operation.key)

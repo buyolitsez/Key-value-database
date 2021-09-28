@@ -1,9 +1,8 @@
-import java.io.File
 import kotlin.test.*
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-internal class TestContainsDBOperation {
+internal class TestContainsKeyDBOperation {
     private val standardOut = System.out
     private val stream = ByteArrayOutputStream()
 
@@ -14,7 +13,7 @@ internal class TestContainsDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/TestContainsDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/TestContainsKeyDBOperation/"
         MAX_RECORDS_FILE = 5
     }
 
@@ -31,11 +30,12 @@ internal class TestContainsDBOperation {
     @Test
     fun testSet1To10AndThenCheck() {
         val localDB = Database()
+        localDB.clear()
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
         for (i in 0..20) {
-            localDB.contains(i.toULong())
+            localDB.containsKey(i.toULong())
         }
         assertEquals(
             "true\n" +
@@ -65,6 +65,7 @@ internal class TestContainsDBOperation {
     @Test
     fun testReset1To10() {
         val localDB = Database()
+        localDB.clear()
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
@@ -72,7 +73,7 @@ internal class TestContainsDBOperation {
             localDB.set(i.toULong(), (i + 5).toString())
         }
         for (i in 0..20) {
-            localDB.contains(i.toULong())
+            localDB.containsKey(i.toULong())
         }
         System.setOut(standardOut)
         assertEquals(

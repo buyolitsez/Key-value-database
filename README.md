@@ -28,7 +28,7 @@ where KEY and VALUE is a strings
 ## List of options
 
 + ```exit``` - exit from database interface
-+ ```contains [KEY]``` - checks if the database contains the given key(true or false).
++ ```containsKey [KEY]``` - checks if the database contains the given key(true or false).
 + ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
 + ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
 + ```remove [KEY]``` - Removes the specified KEY and its corresponding value from this map.

@@ -98,7 +98,7 @@ class Database {
         uploadPartDatabase()
     }
 
-    fun contains(key: ULong) {
+    fun containsKey(key: ULong) {
         val startNum = currentFile
         do {
             if (data.contains(key)) {
