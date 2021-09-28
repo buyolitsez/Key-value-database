@@ -75,7 +75,6 @@ internal class TestContainsKeyDBOperation {
         for (i in 0..20) {
             localDB.containsKey(i.toULong())
         }
-        System.setOut(standardOut)
         assertEquals(
             "true\n" +
                     "true\n" +
