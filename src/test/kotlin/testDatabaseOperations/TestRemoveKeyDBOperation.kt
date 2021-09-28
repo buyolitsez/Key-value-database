@@ -1,3 +1,9 @@
+package testDatabaseOperations
+
+import Database
+import MAX_RECORDS_FILE
+import PATH_DATA_DIRECTORY
+import setDefaultValues
 import kotlin.test.*
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream

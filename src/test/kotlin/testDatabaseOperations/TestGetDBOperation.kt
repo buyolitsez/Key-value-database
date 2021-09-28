@@ -1,3 +1,9 @@
+package testDatabaseOperations
+
+import Database
+import MAX_RECORDS_FILE
+import PATH_DATA_DIRECTORY
+import setDefaultValues
 import kotlin.test.*
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
@@ -13,7 +19,7 @@ internal class TestGetDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/TestGetDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/testDatabaseOperations.TestGetDBOperation/"
         MAX_RECORDS_FILE = 5
     }
 
