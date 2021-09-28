@@ -34,32 +34,31 @@ internal class TestGetDBOperation {
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
-        System.setOut(standardOut)
         for (i in 0..20) {
             localDB.get(i.toULong())
         }
         assertEquals(
-            "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false", stream.toString().trim()
+            "0\n" +
+                    "1\n" +
+                    "2\n" +
+                    "3\n" +
+                    "4\n" +
+                    "5\n" +
+                    "6\n" +
+                    "7\n" +
+                    "8\n" +
+                    "9\n" +
+                    "10\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key", stream.toString().trim()
         )
     }
 
@@ -77,27 +76,27 @@ internal class TestGetDBOperation {
             localDB.get(i.toULong())
         }
         assertEquals(
-            "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "true\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false\n" +
-                    "false", stream.toString().trim()
+            "5\n" +
+                    "6\n" +
+                    "7\n" +
+                    "8\n" +
+                    "9\n" +
+                    "10\n" +
+                    "11\n" +
+                    "12\n" +
+                    "13\n" +
+                    "14\n" +
+                    "15\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key\n" +
+                    "No such key", stream.toString().trim()
         )
     }
 
