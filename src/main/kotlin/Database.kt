@@ -20,25 +20,43 @@ class Database {
         if (PATH_DATA_DIRECTORY.last() != '/') {
             PATH_DATA_DIRECTORY += "/"
         }
+        correctDirectory()
         calculateNumberOfFiles()
         loadPartDatabaseFromFile(1)
+    }
+
+    /** Reduce files in path */
+    private fun correctDirectory() {
+        deleteEmptyFiles()
+    }
+
+    private fun deleteEmptyFiles() {
+        if (!File(PATH_DATA_DIRECTORY).exists()) {
+            File(PATH_DATA_DIRECTORY).mkdir()
+        }
+        if (File(PATH_DATA_DIRECTORY).list() == null) {
+            throwError("Unknown state with directory $PATH_DATA_DIRECTORY", true)
+            return
+        }
+        var currentNumber = 1
+        File(PATH_DATA_DIRECTORY).walk().sorted().drop(1).forEach { file ->
+            if (file.length() != 0.toLong()) {
+                file.renameTo(File("$PATH_DATA_DIRECTORY$currentNumber"))
+                currentNumber++
+            } else {
+                file.delete()
+            }
+        }
     }
 
     /** calculate number of files and write it into [totalCountOfFiles]
      * If there is no files, we suppose that there is one
      */
     fun calculateNumberOfFiles() {
-        if (!File(PATH_DATA_DIRECTORY).exists()) {
-            File(PATH_DATA_DIRECTORY).mkdir()
-        }
-        if (File(PATH_DATA_DIRECTORY).list() == null) {
-            throwError("Cant calculate number of files in $PATH_DATA_DIRECTORY")
-        } else {
-            totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
-            if (totalCountOfFiles == 0) {
-                currentFile = 0
-                totalCountOfFiles = 1
-            }
+        totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
+        if (totalCountOfFiles == 0) {
+            currentFile = 0
+            totalCountOfFiles = 1
         }
     }
 
@@ -57,12 +75,14 @@ class Database {
         val inputStream: InputStream = file.inputStream()
         inputStream.bufferedReader().forEachLine { str ->
             if (str.count { it == SEPARATOR } != 1) {
-                throwError("Wrong record\n $str")
+                throwError("Wrong record\n $str", true)
+                return@forEachLine
             }
             val (key, value) = str.split(SEPARATOR)
             data[key.toULong()] = value
             if (data.size >= MAX_RECORDS_FILE) {
-                throwError("File($num) is too big")
+                throwError("File($num) is too big", true)
+                return@forEachLine
             }
         }
     }
@@ -96,6 +116,7 @@ class Database {
     fun exit() {
         outputString("End")
         uploadPartDatabase()
+        correctDirectory()
     }
 
     fun containsKey(key: ULong) {
