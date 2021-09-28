@@ -19,7 +19,7 @@ internal class TestGetDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/testDatabaseOperations.TestGetDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
         MAX_RECORDS_FILE = 5
     }
 

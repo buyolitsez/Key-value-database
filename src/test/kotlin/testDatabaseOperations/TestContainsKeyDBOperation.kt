@@ -19,7 +19,7 @@ internal class TestContainsKeyDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/testDatabaseOperations.TestContainsKeyDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
         MAX_RECORDS_FILE = 5
     }
 

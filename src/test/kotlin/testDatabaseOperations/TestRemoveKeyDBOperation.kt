@@ -19,7 +19,7 @@ internal class TestRemoveKeyDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/TestRemoveDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
         MAX_RECORDS_FILE = 5
     }
 
@@ -34,7 +34,7 @@ internal class TestRemoveKeyDBOperation {
     }
 
     @Test
-    fun testSet1To10AndThenCheck() {
+    fun testSet1To10WithoutRepeating() {
         val localDB = Database()
         localDB.clear()
         for (i in 0..10) {
@@ -43,6 +43,7 @@ internal class TestRemoveKeyDBOperation {
         localDB.removeKey(3.toULong())
         localDB.removeKey(5.toULong())
         localDB.removeKey(10.toULong())
+        localDB.set(9.toULong(), "11")
         for (i in 0..15) {
             localDB.get(i.toULong())
         }
@@ -56,7 +57,7 @@ internal class TestRemoveKeyDBOperation {
                     "6\n" +
                     "7\n" +
                     "8\n" +
-                    "9\n" +
+                    "11\n" +
                     "No such key\n" +
                     "No such key\n" +
                     "No such key\n" +

@@ -10,7 +10,7 @@ import kotlin.test.*
 internal class TestSetDBOperation {
     @BeforeTest
     fun setConstants() = run {
-        PATH_DATA_DIRECTORY = "testData/testDatabaseOperations.TestSetDBOperation/"
+        PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
         MAX_RECORDS_FILE = 5
     }
 
@@ -22,6 +22,7 @@ internal class TestSetDBOperation {
     @Test
     fun testSet1To10() {
         val localDB = Database()
+        localDB.clear()
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
@@ -43,12 +44,12 @@ internal class TestSetDBOperation {
                     "9=9\n" +
                     "10=10\n"
         )
-        localDB.exit()
     }
 
     @Test
     fun testReset1To10() {
         val localDB = Database()
+        localDB.clear()
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
@@ -73,7 +74,6 @@ internal class TestSetDBOperation {
                     "9=14\n" +
                     "10=15\n"
         )
-        localDB.exit()
     }
 
 }
