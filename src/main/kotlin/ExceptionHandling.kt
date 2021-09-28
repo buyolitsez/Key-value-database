@@ -1,4 +1,6 @@
-fun throwError(error: String) {
+fun throwError(error: String, exitDatabase : Boolean = false) {
     System.err.println(error)
-    db.exit()
+    if (exitDatabase) {
+        db.exit()
+    }
 }
