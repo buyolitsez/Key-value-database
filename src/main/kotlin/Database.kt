@@ -145,7 +145,7 @@ class Database {
         data[key] = value
     }
 
-    fun remove(key: ULong) {
+    fun removeKey(key: ULong) {
         val startNum = currentFile
         do {
             if (data.contains(key)) {

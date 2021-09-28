@@ -31,7 +31,7 @@ where KEY and VALUE is a strings
 + ```containsKey [KEY]``` - checks if the database contains the given key(true or false).
 + ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
 + ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
-+ ```remove [KEY]``` - Removes the specified KEY and its corresponding value from this map.
++ ```removeKey [KEY]``` - Removes the specified KEY and its corresponding value from this map.
 + ```size``` - output size of database.
 + ```is-empty``` - output 1 or 0, is database empty or not respectively.
 + ```clear``` - removes all elements from database.

@@ -49,7 +49,7 @@ fun startOperation() {
             "containsKey" -> db.containsKey(operation.key)
             "get" -> db.get(operation.key)
             "set" -> db.set(operation.key, operation.value)
-            "remove" -> db.remove(operation.key)
+            "removeKey" -> db.removeKey(operation.key)
             "size" -> db.size()
             "is-empty" -> db.isEmpty()
             "clear" -> db.clear()
