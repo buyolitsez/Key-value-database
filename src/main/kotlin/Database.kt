@@ -15,6 +15,7 @@ class Database {
     private var currentFile = 0
     var data = HashMap<ULong, String>()
     var totalCountOfFiles = 0
+    var currentSizeInBytes : Long = 0.toLong()
 
     init {
         if (PATH_DATA_DIRECTORY.last() != '/') {
@@ -23,6 +24,14 @@ class Database {
         correctDirectory()
         calculateNumberOfFiles()
         loadPartDatabaseFromFile(1)
+    }
+
+    private fun getSizeOfRecord(key : ULong) : Long {
+        return key.toString().length.toLong() + 1 + data[key]!!.length + 1
+    }
+
+    private fun getSizeOfRecord(key : ULong, value : String) : Long {
+        return key.toString().length.toLong() + 1 + value.length + 1
     }
 
     /** Reduce files in path */
@@ -39,7 +48,12 @@ class Database {
             return
         }
         var currentNumber = 1
-        File(PATH_DATA_DIRECTORY).walk().sorted().drop(1).forEach { file ->
+        File(PATH_DATA_DIRECTORY).walk().drop(1).sortedWith(kotlin.Comparator{num1, num2 ->
+            if (num1.name.toIntOrNull() == null || num2.name.toIntOrNull() == null) {
+                return@Comparator if (num1.name < num2.name) -1 else 1
+            }
+            return@Comparator if (num1.name.toInt() < num2.name.toInt()) -1 else 1
+        }).forEach { file ->
             if (file.length() != 0.toLong()) {
                 file.renameTo(File("$PATH_DATA_DIRECTORY$currentNumber"))
                 currentNumber++
@@ -80,10 +94,11 @@ class Database {
             }
             val (key, value) = str.split(SEPARATOR)
             data[key.toULong()] = value
-            if (data.size >= MAX_RECORDS_FILE) {
-                throwError("File($num) is too big", true)
-                return@forEachLine
-            }
+            currentSizeInBytes += getSizeOfRecord(key.toULong())
+        }
+        if (currentSizeInBytes >= MAX_FILE_SIZE) {
+            throwError("File($num) is too big", true)
+            return
         }
     }
 
@@ -99,6 +114,7 @@ class Database {
         }
         file.writeText(output.toString())
         currentFile = 0
+        currentSizeInBytes = 0
         data.clear()
     }
 
@@ -155,21 +171,23 @@ class Database {
         } while (currentFile != startNum)
         // Try to find not empty data
         do {
-            if (data.size != MAX_RECORDS_FILE - 1) {
+            if (currentSizeInBytes + getSizeOfRecord(key, value) < MAX_FILE_SIZE) {
                 break
             }
             getNextPart()
         } while (currentFile != startNum)
-        if (data.size == MAX_RECORDS_FILE - 1) {
+        if (currentSizeInBytes + getSizeOfRecord(key, value) >= MAX_FILE_SIZE) {
             createNewPart()
         }
         data[key] = value
+        currentSizeInBytes += getSizeOfRecord(key, value)
     }
 
     fun removeKey(key: ULong) {
         val startNum = currentFile
         do {
             if (data.contains(key)) {
+                currentSizeInBytes = currentSizeInBytes - getSizeOfRecord(key)
                 data.remove(key)
                 return
             }

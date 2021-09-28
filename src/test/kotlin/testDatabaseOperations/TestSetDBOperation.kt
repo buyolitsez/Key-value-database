@@ -1,7 +1,7 @@
 package testDatabaseOperations
 
 import Database
-import MAX_RECORDS_FILE
+import MAX_FILE_SIZE
 import PATH_DATA_DIRECTORY
 import setDefaultValues
 import java.io.File
@@ -11,7 +11,7 @@ internal class TestSetDBOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_RECORDS_FILE = 5
+        MAX_FILE_SIZE = 1000
     }
 
     @AfterTest
@@ -23,6 +23,7 @@ internal class TestSetDBOperation {
     fun testSet1To10() {
         val localDB = Database()
         localDB.clear()
+        MAX_FILE_SIZE = 20
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
@@ -50,6 +51,7 @@ internal class TestSetDBOperation {
     fun testReset1To10() {
         val localDB = Database()
         localDB.clear()
+        MAX_FILE_SIZE = 20
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }

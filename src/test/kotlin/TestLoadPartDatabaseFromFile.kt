@@ -19,7 +19,7 @@ internal class TestLoadPartDatabaseFromFile {
     @Test
     fun testDataWithStandardSeparator() {
         PATH_DATA_DIRECTORY = "testData/TestLoadPartDatabaseFromFile/testDataWithStandardSeparator/"
-        MAX_RECORDS_FILE = 5
+        MAX_FILE_SIZE = 20
         SEPARATOR = '='
         val localDB = Database()
         localDB.calculateNumberOfFiles()
@@ -32,7 +32,7 @@ internal class TestLoadPartDatabaseFromFile {
     @Test
     fun testDataWithOddSeparator() {
         PATH_DATA_DIRECTORY = "testData/TestLoadPartDatabaseFromFile/testDataWithOddSeparator/"
-        MAX_RECORDS_FILE = 5
+        MAX_FILE_SIZE = 30
         SEPARATOR = '|'
         val localDB = Database()
         localDB.calculateNumberOfFiles()

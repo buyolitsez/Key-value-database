@@ -14,13 +14,13 @@ val FUNCTIONS = mapOf(
 /** Separator in every file*/
 var SEPARATOR = '='
 
-/** The count of lines in each file less than [MAX_RECORDS_FILE]*/
-var MAX_RECORDS_FILE = 3
+/** Maximum size of file in Bytes */
+var MAX_FILE_SIZE = 30
 
 var PATH_DATA_DIRECTORY = "data/"
 
 fun setDefaultValues() {
     SEPARATOR = '='
-    MAX_RECORDS_FILE = 3
+    MAX_FILE_SIZE = 30
     PATH_DATA_DIRECTORY = "data/"
 }

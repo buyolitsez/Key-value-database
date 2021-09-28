@@ -1,14 +1,14 @@
 package testDatabaseOperations
 
 import Database
-import MAX_RECORDS_FILE
+import MAX_FILE_SIZE
 import PATH_DATA_DIRECTORY
 import setDefaultValues
 import kotlin.test.*
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 
-internal class TestIsEmpty {
+internal class TestIsEmptyOperation {
     private val standardOut = System.out
     private val stream = ByteArrayOutputStream()
 
@@ -20,7 +20,7 @@ internal class TestIsEmpty {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_RECORDS_FILE = 5
+        MAX_FILE_SIZE = 100
     }
 
     @AfterTest

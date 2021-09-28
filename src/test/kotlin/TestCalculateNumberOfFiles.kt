@@ -1,5 +1,4 @@
 import kotlin.test.*
-
 internal class TestCalculateNumberOfFiles {
     @AfterTest
     fun setAll() = run {
@@ -42,3 +41,4 @@ internal class TestCalculateNumberOfFiles {
         localDB.exit()
     }
 }
+
