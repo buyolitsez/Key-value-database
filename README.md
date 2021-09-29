@@ -37,13 +37,33 @@ For example
 
 ## List of options
 
+You can see some variants for function names, you can use one, that you prefer
+
 + ```exit``` - exit from database interface
-+ ```containsKey [KEY]``` - checks if the database contains the given key(true or false).
+
+* ```containsKey [KEY]``` - checks if the database contains the given key(true or false).
+* ```find``` 
+
 + ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
-+ ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
+
+* ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
+* ```change```
+
 + ```removeKey [KEY]``` - Removes the specified KEY and its corresponding value from this map.
-+ ```size``` - output size of database.
++ ```remove```
++ ```delete```
+
+* ```size``` - output size of database.
+* ```len```
+* ```length```
+
 + ```is-empty``` - output 1 or 0, is database empty or not respectively.
-+ ```clear``` - removes all elements from database.
++ ```isEmpty```
++ ```empty```
+
+* ```clear``` - removes all elements from database.
+* ```flush```
+
 + ```values``` - output all values in database.
++ ```value```
 ---
