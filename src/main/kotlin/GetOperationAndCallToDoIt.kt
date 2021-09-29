@@ -1,3 +1,5 @@
+import kotlin.system.exitProcess
+
 /**
  * @property nameOperation is a name of operation
  * @property key is a key when it needed or 0 when not.
@@ -44,7 +46,8 @@ fun doOperation(input: List<String>) {
     val operation = readArgs(input) ?: return
     when (operation.nameOperation) {
         "exit" -> {
-            db.exit(); return
+            db.exit()
+            exitProcess(0)
         }
         "containsKey" -> db.containsKey(operation.key)
         "get" -> db.get(operation.key)
