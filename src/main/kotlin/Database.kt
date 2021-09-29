@@ -173,24 +173,23 @@ class Database {
     /** Set [key] to [value] in database*/
     fun set(key: ULong, value: String) {
         val startNum = currentFile
+        var notFullPart = 0
         // Try to find key
         do {
             if (data.contains(key)) {
                 data[key] = value
                 return
             }
-            getNextPart()
-        } while (currentFile != startNum)
-        // Try to find not empty data
-        do {
             if (currentSizeInBytes + getSizeOfRecord(key, value) < MAX_FILE_SIZE) {
-                break
+                notFullPart = currentFile
             }
             getNextPart()
         } while (currentFile != startNum)
-        //all parts are fully loaded
-        if (currentSizeInBytes + getSizeOfRecord(key, value) >= MAX_FILE_SIZE) {
+        if (notFullPart == 0) {
             createNewPart()
+        } else {
+            uploadPartDatabase()
+            loadPartDatabaseFromFile(notFullPart)
         }
         data[key] = value
         currentSizeInBytes += getSizeOfRecord(key, value)
