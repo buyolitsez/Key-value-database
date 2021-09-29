@@ -31,10 +31,31 @@ fun readArgs(args: List<String>): Operation? {
         value = args[2]
     }
     if (key.contains(SEPARATOR) || value.contains(SEPARATOR)) {
-        throwError("Key and value cant contain separator $SEPARATOR\n", )
+        throwError("Key and value cant contain separator $SEPARATOR\n")
         return null
     }
     return Operation(nameOperation, getHash(key), value)
+}
+
+enum class STATE {
+    CONTINUE, RETURN
+}
+
+fun doOperation(arg: List<String>) : STATE {
+    val operation = readArgs(arg) ?: return STATE.CONTINUE
+    when (operation.nameOperation) {
+        "exit" -> {db.exit(); return STATE.RETURN}
+        "containsKey" -> db.containsKey(operation.key)
+        "get" -> db.get(operation.key)
+        "set" -> db.set(operation.key, operation.value)
+        "removeKey" -> db.removeKey(operation.key)
+        "size" -> db.size()
+        "is-empty" -> db.isEmpty()
+        "clear" -> db.clear()
+        "values" -> db.values()
+        else -> {throwError("Forgot to add function"); return STATE.RETURN}
+    }
+    return STATE.CONTINUE
 }
 
 /** Just read commands and do it */
@@ -47,18 +68,9 @@ fun startOperation() {
             continue
         }
         val args = str.split(' ').filter { it.isNotBlank() }
-        val operation = readArgs(args) ?: continue
-        when (operation.nameOperation) {
-            "exit" -> {db.exit(); return}
-            "containsKey" -> db.containsKey(operation.key)
-            "get" -> db.get(operation.key)
-            "set" -> db.set(operation.key, operation.value)
-            "removeKey" -> db.removeKey(operation.key)
-            "size" -> db.size()
-            "is-empty" -> db.isEmpty()
-            "clear" -> db.clear()
-            "values" -> db.values()
-            else -> {throwError("Forgot to add function"); return}
+        val state = doOperation(args)
+        if (state == STATE.RETURN) {
+            return
         }
     }
 }
