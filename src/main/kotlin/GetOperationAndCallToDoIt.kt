@@ -41,8 +41,8 @@ enum class STATE {
     CONTINUE, RETURN
 }
 
-fun doOperation(arg: List<String>) : STATE {
-    val operation = readArgs(arg) ?: return STATE.CONTINUE
+fun doOperation(input: List<String>) : STATE {
+    val operation = readArgs(input) ?: return STATE.CONTINUE
     when (operation.nameOperation) {
         "exit" -> {db.exit(); return STATE.RETURN}
         "containsKey" -> db.containsKey(operation.key)
@@ -60,15 +60,20 @@ fun doOperation(arg: List<String>) : STATE {
 
 /** Just read commands and do it */
 
-fun startOperation() {
+fun startOperation(args : Array<String>) {
+    if (args.isNotEmpty()) {
+        doOperation(args.toList())
+        db.exit()
+        return
+    }
     var str: String?
     while (true) {
         str = readLine()
         if (str == null) {
             continue
         }
-        val args = str.split(' ').filter { it.isNotBlank() }
-        val state = doOperation(args)
+        val input = str.split(' ').filter { it.isNotBlank() }
+        val state = doOperation(input)
         if (state == STATE.RETURN) {
             return
         }
