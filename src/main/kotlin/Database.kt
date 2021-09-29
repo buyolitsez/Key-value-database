@@ -15,7 +15,7 @@ class Database {
     private var currentFile = 0
     var data = HashMap<ULong, String>()
     var totalCountOfFiles = 0
-    var currentSizeInBytes : Long = 0.toLong()
+    private var currentSizeInBytes : Long = 0.toLong()
 
     init {
         if (PATH_DATA_DIRECTORY.last() != '/') {
@@ -187,7 +187,7 @@ class Database {
         val startNum = currentFile
         do {
             if (data.contains(key)) {
-                currentSizeInBytes = currentSizeInBytes - getSizeOfRecord(key)
+                currentSizeInBytes -= getSizeOfRecord(key)
                 data.remove(key)
                 return
             }
