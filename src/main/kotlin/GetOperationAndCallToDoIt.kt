@@ -1,16 +1,18 @@
 /**
  * @property nameOperation is a name of operation
- * @property key is a key when it needed or empty string when not.
+ * @property key is a key when it needed or 0 when not.
  * @property value is a value when it needed or empty string when not.
  */
 data class Operation(var nameOperation: String, val key: ULong, val value: String)
 
 /** Read command and values from run args
  * @property args run args
+ * @return Operation
  */
 fun readArgs(args: List<String>): Operation? {
     if (args.isEmpty()) {
         throwError("No args")
+        return null
     }
     var nameOperation = args[0].trim()
     if (!NAME_OF_FUNCTIONS.containsKey(nameOperation)) {
@@ -18,7 +20,7 @@ fun readArgs(args: List<String>): Operation? {
         return null
     }
     nameOperation = NAME_OF_FUNCTIONS[nameOperation]!!
-    if (args.size != FUNCTIONS[nameOperation]?.plus(1)) {
+    if (args.size != FUNCTIONS[nameOperation]!! + 1) {
         throwError("Wrong count of data")
         return null
     }
@@ -37,10 +39,13 @@ fun readArgs(args: List<String>): Operation? {
     return Operation(nameOperation, getHash(key), value)
 }
 
+/** Execute single Operation */
 fun doOperation(input: List<String>) {
     val operation = readArgs(input) ?: return
     when (operation.nameOperation) {
-        "exit" -> {db.exit(); return}
+        "exit" -> {
+            db.exit(); return
+        }
         "containsKey" -> db.containsKey(operation.key)
         "get" -> db.get(operation.key)
         "set" -> db.set(operation.key, operation.value)
@@ -49,13 +54,15 @@ fun doOperation(input: List<String>) {
         "is-empty" -> db.isEmpty()
         "clear" -> db.clear()
         "values" -> db.values()
-        else -> {throwError("Forgot to add function"); return}
+        else -> {
+            throwError("Forgot to add function"); return
+        }
     }
 }
 
-/** Read commands from run args and do them */
+/** Reads commands from run args and executes them */
 
-fun startOperationFromArgs(args : Array<String>) {
+fun startOperationFromArgs(args: Array<String>) {
     var currentIterator = 0
     while (currentIterator < args.size) {
         val nameOperation = args[currentIterator].trim()
@@ -74,9 +81,9 @@ fun startOperationFromArgs(args : Array<String>) {
     db.exit()
 }
 
-/** Just read commands and do it */
+/** Reads commands and executes them */
 
-fun startOperation(args : Array<String>) {
+fun startOperation(args: Array<String>) {
     if (args.isNotEmpty()) {
         startOperationFromArgs(args)
         return
@@ -84,10 +91,9 @@ fun startOperation(args : Array<String>) {
     var str: String?
     while (true) {
         str = readLine()
-        if (str == null) {
-            continue
+        if (str != null) {
+            val input = str.split(' ').filter { it.isNotBlank() }
+            doOperation(input)
         }
-        val input = str.split(' ').filter { it.isNotBlank() }
-        doOperation(input)
     }
 }

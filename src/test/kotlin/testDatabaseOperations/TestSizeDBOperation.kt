@@ -20,7 +20,7 @@ internal class TestSizeDBOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_FILE_SIZE = 100
+        MAX_FILE_SIZE = 100U
     }
 
     @AfterTest
@@ -40,9 +40,9 @@ internal class TestSizeDBOperation {
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
-        localDB.removeKey(3.toULong())
-        localDB.removeKey(5.toULong())
-        localDB.removeKey(10.toULong())
+        localDB.removeKey(3U)
+        localDB.removeKey(5U)
+        localDB.removeKey(10U)
         localDB.size()
         assertEquals(stream.toString().trim().toInt(), 8)
     }
@@ -57,12 +57,12 @@ internal class TestSizeDBOperation {
         for (i in 0..10) {
             localDB.set(i.toULong(), (i + 5).toString())
         }
-        localDB.removeKey(3.toULong())
-        localDB.removeKey(5.toULong())
-        localDB.removeKey(10.toULong())
-        localDB.removeKey(11.toULong())
-        localDB.removeKey(13.toULong())
-        localDB.removeKey(15.toULong())
+        localDB.removeKey(3U)
+        localDB.removeKey(5U)
+        localDB.removeKey(10U)
+        localDB.removeKey(11U)
+        localDB.removeKey(13U)
+        localDB.removeKey(15U)
         localDB.size()
         assertEquals(stream.toString().trim().toInt(), 8)
     }
@@ -74,12 +74,12 @@ internal class TestSizeDBOperation {
         for (i in 0..5) {
             localDB.set(i.toULong(), i.toString())
         }
-        localDB.removeKey(0.toULong())
-        localDB.removeKey(1.toULong())
-        localDB.removeKey(2.toULong())
-        localDB.removeKey(3.toULong())
-        localDB.removeKey(4.toULong())
-        localDB.removeKey(5.toULong())
+        localDB.removeKey(0U)
+        localDB.removeKey(1U)
+        localDB.removeKey(2U)
+        localDB.removeKey(3U)
+        localDB.removeKey(4U)
+        localDB.removeKey(5U)
         localDB.size()
         assertEquals(stream.toString().trim().toInt(), 0)
     }

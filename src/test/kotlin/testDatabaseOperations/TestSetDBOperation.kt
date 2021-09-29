@@ -11,7 +11,7 @@ internal class TestSetDBOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_FILE_SIZE = 1000
+        MAX_FILE_SIZE = 1000U
     }
 
     @AfterTest
@@ -23,7 +23,7 @@ internal class TestSetDBOperation {
     fun testSet1To10() {
         val localDB = Database()
         localDB.clear()
-        MAX_FILE_SIZE = 20
+        MAX_FILE_SIZE = 20U
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
@@ -51,7 +51,7 @@ internal class TestSetDBOperation {
     fun testReset1To10() {
         val localDB = Database()
         localDB.clear()
-        MAX_FILE_SIZE = 20
+        MAX_FILE_SIZE = 20U
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }

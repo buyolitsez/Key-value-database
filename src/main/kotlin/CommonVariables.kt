@@ -46,10 +46,10 @@ val NAME_OF_FUNCTIONS = mapOf(
 var SEPARATOR = '='
 
 /** Maximum size of file in Bytes */
-var MAX_FILE_SIZE : ULong = 30U
+var MAX_FILE_SIZE: ULong = 3000000000000U
 
 var PATH_DATA_DIRECTORY = "data/"
 
 fun setDefaultValues() {
-    loadSettingFromFile("settings")
+    loadSettingsFromFile("settings")
 }

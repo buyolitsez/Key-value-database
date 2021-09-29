@@ -20,7 +20,7 @@ internal class TestIsEmptyOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_FILE_SIZE = 100
+        MAX_FILE_SIZE = 100U
     }
 
     @AfterTest
@@ -37,11 +37,11 @@ internal class TestIsEmptyOperation {
     fun testNotEmpty() {
         val localDB = Database()
         localDB.clear()
-        localDB.set(0.toULong(), "0")
-        localDB.set(1.toULong(), "1")
-        localDB.removeKey(1.toULong())
-        localDB.removeKey(1.toULong())
-        localDB.removeKey(2.toULong())
+        localDB.set(0U, "0")
+        localDB.set(1U, "1")
+        localDB.removeKey(1U)
+        localDB.removeKey(1U)
+        localDB.removeKey(2U)
         localDB.isEmpty()
         assertEquals(stream.toString().trim(), "false")
     }
@@ -50,10 +50,10 @@ internal class TestIsEmptyOperation {
     fun testIsEmpty() {
         val localDB = Database()
         localDB.clear()
-        localDB.set(0.toULong(), "0")
-        localDB.set(1.toULong(), "1")
-        localDB.removeKey(1.toULong())
-        localDB.removeKey(0.toULong())
+        localDB.set(0U, "0")
+        localDB.set(1U, "1")
+        localDB.removeKey(1U)
+        localDB.removeKey(0U)
         localDB.isEmpty()
         assertEquals(stream.toString().trim(), "true")
     }

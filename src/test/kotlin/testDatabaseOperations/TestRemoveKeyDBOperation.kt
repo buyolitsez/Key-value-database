@@ -20,7 +20,7 @@ internal class TestRemoveKeyDBOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_FILE_SIZE = 100
+        MAX_FILE_SIZE = 100U
     }
 
     @AfterTest
@@ -40,10 +40,10 @@ internal class TestRemoveKeyDBOperation {
         for (i in 0..10) {
             localDB.set(i.toULong(), i.toString())
         }
-        localDB.removeKey(3.toULong())
-        localDB.removeKey(5.toULong())
-        localDB.removeKey(10.toULong())
-        localDB.set(9.toULong(), "11")
+        localDB.removeKey(3U)
+        localDB.removeKey(5U)
+        localDB.removeKey(10U)
+        localDB.set(9U, "11")
         for (i in 0..15) {
             localDB.get(i.toULong())
         }
@@ -77,12 +77,12 @@ internal class TestRemoveKeyDBOperation {
         for (i in 0..10) {
             localDB.set(i.toULong(), (i + 5).toString())
         }
-        localDB.removeKey(3.toULong())
-        localDB.removeKey(5.toULong())
-        localDB.removeKey(10.toULong())
-        localDB.removeKey(11.toULong())
-        localDB.removeKey(13.toULong())
-        localDB.removeKey(15.toULong())
+        localDB.removeKey(3U)
+        localDB.removeKey(5U)
+        localDB.removeKey(10U)
+        localDB.removeKey(11U)
+        localDB.removeKey(13U)
+        localDB.removeKey(15U)
         for (i in 0..20) {
             localDB.get(i.toULong())
         }

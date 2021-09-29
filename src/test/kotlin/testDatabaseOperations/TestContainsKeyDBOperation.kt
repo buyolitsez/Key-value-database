@@ -20,7 +20,7 @@ internal class TestContainsKeyDBOperation {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
-        MAX_FILE_SIZE = 100
+        MAX_FILE_SIZE = 100U
     }
 
     @AfterTest

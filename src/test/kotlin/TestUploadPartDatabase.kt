@@ -5,7 +5,7 @@ internal class TestUploadPartDatabase {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestUploadPartDatabase/"
-        MAX_FILE_SIZE = 10
+        MAX_FILE_SIZE = 10U
         File("${PATH_DATA_DIRECTORY}1").writeText("") // Clear output file
     }
 

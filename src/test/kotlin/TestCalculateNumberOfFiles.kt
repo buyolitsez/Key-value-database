@@ -9,7 +9,6 @@ internal class TestCalculateNumberOfFiles {
     fun test0Files() {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test0Files"
         val localDB = Database()
-        localDB.calculateNumberOfFiles()
         assertEquals(1, localDB.totalCountOfFiles)
         localDB.exit()
     }
@@ -18,7 +17,6 @@ internal class TestCalculateNumberOfFiles {
     fun test1File() {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test1File"
         val localDB = Database()
-        localDB.calculateNumberOfFiles()
         assertEquals(1, localDB.totalCountOfFiles)
         localDB.exit()
     }
@@ -27,7 +25,6 @@ internal class TestCalculateNumberOfFiles {
     fun test2File() {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test2Files"
         val localDB = Database()
-        localDB.calculateNumberOfFiles()
         assertEquals(2, localDB.totalCountOfFiles)
         localDB.exit()
     }
@@ -36,7 +33,6 @@ internal class TestCalculateNumberOfFiles {
     fun test100File() {
         PATH_DATA_DIRECTORY = "testData/TestCalculateNumberOfFiles/test100Files"
         val localDB = Database()
-        localDB.calculateNumberOfFiles()
         assertEquals(100, localDB.totalCountOfFiles)
         localDB.exit()
     }
