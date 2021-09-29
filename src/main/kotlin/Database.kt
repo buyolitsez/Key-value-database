@@ -172,6 +172,10 @@ class Database {
 
     /** Set [key] to [value] in database*/
     fun set(key: ULong, value: String) {
+        if (getSizeOfRecord(key, value) >= MAX_FILE_SIZE) {
+            throwError("Too big record, to write in a one file\n $key=$value")
+            return
+        }
         val startNum = currentFile
         var notFullPart = 0
         // Try to find key
