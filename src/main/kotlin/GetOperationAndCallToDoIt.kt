@@ -11,7 +11,6 @@ data class Operation(var nameOperation: String, val key: ULong, val value: Strin
 fun readArgs(args: List<String>): Operation? {
     if (args.isEmpty()) {
         throwError("No args")
-        return null
     }
     var nameOperation = args[0].trim()
     if (!NAME_OF_FUNCTIONS.containsKey(nameOperation)) {
@@ -38,14 +37,10 @@ fun readArgs(args: List<String>): Operation? {
     return Operation(nameOperation, getHash(key), value)
 }
 
-enum class STATE {
-    CONTINUE, RETURN
-}
-
-fun doOperation(input: List<String>) : STATE {
-    val operation = readArgs(input) ?: return STATE.CONTINUE
+fun doOperation(input: List<String>) {
+    val operation = readArgs(input) ?: return
     when (operation.nameOperation) {
-        "exit" -> {db.exit(); return STATE.RETURN}
+        "exit" -> {db.exit(); return}
         "containsKey" -> db.containsKey(operation.key)
         "get" -> db.get(operation.key)
         "set" -> db.set(operation.key, operation.value)
@@ -54,9 +49,8 @@ fun doOperation(input: List<String>) : STATE {
         "is-empty" -> db.isEmpty()
         "clear" -> db.clear()
         "values" -> db.values()
-        else -> {throwError("Forgot to add function"); return STATE.RETURN}
+        else -> {throwError("Forgot to add function"); return}
     }
-    return STATE.CONTINUE
 }
 
 /** Read commands from run args and do them */
@@ -67,12 +61,12 @@ fun startOperationFromArgs(args : Array<String>) {
         val nameOperation = args[currentIterator].trim()
         if (!FUNCTIONS.containsKey(nameOperation)) {
             throwError("Dont know $nameOperation operation")
-            return
+            break
         }
         val needArguments = FUNCTIONS[nameOperation]!!
         if (currentIterator + needArguments > args.size) {
             throwError("Wrong count of data")
-            return
+            break
         }
         doOperation(args.copyOfRange(currentIterator, currentIterator + needArguments + 1).toList())
         currentIterator += needArguments + 1
@@ -94,9 +88,6 @@ fun startOperation(args : Array<String>) {
             continue
         }
         val input = str.split(' ').filter { it.isNotBlank() }
-        val state = doOperation(input)
-        if (state == STATE.RETURN) {
-            return
-        }
+        doOperation(input)
     }
 }

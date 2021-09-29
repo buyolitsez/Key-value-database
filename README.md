@@ -67,3 +67,9 @@ You can see some variants for function names, you can use one, that you prefer
 + ```values``` - output all values in database.
 + ```value```
 ---
+
+## Addition
+
+You can change default values in file [settings](settings)
+
+---

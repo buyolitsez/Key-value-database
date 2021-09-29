@@ -1,6 +1,9 @@
-fun throwError(error: String, exitDatabase : Boolean = false) {
+import kotlin.system.exitProcess
+
+fun throwError(error: String, exitProcess : Boolean = false) {
     System.err.println(error)
-    if (exitDatabase) {
+    if (exitProcess) {
         db.exit()
+        exitProcess(-1)
     }
 }
