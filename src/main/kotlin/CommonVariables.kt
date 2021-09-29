@@ -50,6 +50,13 @@ var MAX_FILE_SIZE: ULong = 3000000000000U
 
 var PATH_DATA_DIRECTORY = "data/"
 
+/** module for calculating hash of strings */
+var MODULE: ULong = 576460752303423619U // big prime module ~= 5e17
+
+/** coefficient for calculating hash of strings */
+var COEFFICIENT: ULong = 97U
+
 fun setDefaultValues() {
     loadSettingsFromFile("settings")
 }
+

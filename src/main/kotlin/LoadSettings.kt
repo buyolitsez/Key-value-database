@@ -7,20 +7,22 @@ fun setSeparator(value: String) {
     SEPARATOR = value.first()
 }
 
-fun setMaxFileSize(value: String) {
+/** Convert string[value] to ULong or throw exception */
+fun getULongFromString(value: String)  : ULong {
     val intValue = value.toULongOrNull()
     if (intValue == null) {
-        throwError("Wrong value of max file size($value)", true)
-    } else {
-        MAX_FILE_SIZE = intValue
+        throwError("Wrong value, should be ULong type($value)", true)
     }
+    return intValue!!
 }
 
 fun setSetting(name: String, value: String) {
     when (name) {
         "SEPARATOR" -> setSeparator(value)
-        "MAX_FILE_SIZE" -> setMaxFileSize(value)
+        "MAX_FILE_SIZE" -> MAX_FILE_SIZE = getULongFromString(value)
         "PATH_DATA_DIRECTORY" -> PATH_DATA_DIRECTORY = value
+        "MODULE" -> MODULE = getULongFromString(value)
+        "COEFFICIENT" -> COEFFICIENT = getULongFromString(value)
         else -> throwError("Unknown option $name", true)
     }
 }

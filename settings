@@ -1,8 +1,14 @@
-#separator in database
+# separator in database
 SEPARATOR = =
 
-#max size of file, in bytes
+# max size of file, in bytes
 MAX_FILE_SIZE = 20
 
-#path to data directory
+# path to data directory
 PATH_DATA_DIRECTORY = data/
+
+# module for calculating hash of strings
+MODULE = 576460752303423619 # big prime module ~= 5e17
+
+# coefficient for calculating hash of strings
+COEFFICIENT = 97 # should be more than alphabet size
