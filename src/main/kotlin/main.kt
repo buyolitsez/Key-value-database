@@ -1,6 +1,6 @@
 val db = Database()
 
-fun main() {
+fun main(args : Array<String>) {
     setDefaultValues()
-    startOperation()
+    startOperation(args)
 }

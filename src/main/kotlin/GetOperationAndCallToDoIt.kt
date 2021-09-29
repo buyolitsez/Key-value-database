@@ -41,8 +41,8 @@ enum class STATE {
     CONTINUE, RETURN
 }
 
-fun doOperation(arg: List<String>) : STATE {
-    val operation = readArgs(arg) ?: return STATE.CONTINUE
+fun doOperation(input: List<String>) : STATE {
+    val operation = readArgs(input) ?: return STATE.CONTINUE
     when (operation.nameOperation) {
         "exit" -> {db.exit(); return STATE.RETURN}
         "containsKey" -> db.containsKey(operation.key)
@@ -58,17 +58,42 @@ fun doOperation(arg: List<String>) : STATE {
     return STATE.CONTINUE
 }
 
+/** Read commands from run args and do them */
+
+fun startOperationFromArgs(args : Array<String>) {
+    var currentIterator = 0
+    while (currentIterator < args.size) {
+        val nameOperation = args[currentIterator].trim()
+        if (!FUNCTIONS.containsKey(nameOperation)) {
+            throwError("Dont know $nameOperation operation")
+            return
+        }
+        val needArguments = FUNCTIONS[nameOperation]!!
+        if (currentIterator + needArguments > args.size) {
+            throwError("Wrong count of data")
+            return
+        }
+        doOperation(args.copyOfRange(currentIterator, currentIterator + needArguments + 1).toList())
+        currentIterator += needArguments + 1
+    }
+    db.exit()
+}
+
 /** Just read commands and do it */
 
-fun startOperation() {
+fun startOperation(args : Array<String>) {
+    if (args.isNotEmpty()) {
+        startOperationFromArgs(args)
+        return
+    }
     var str: String?
     while (true) {
         str = readLine()
         if (str == null) {
             continue
         }
-        val args = str.split(' ').filter { it.isNotBlank() }
-        val state = doOperation(args)
+        val input = str.split(' ').filter { it.isNotBlank() }
+        val state = doOperation(input)
         if (state == STATE.RETURN) {
             return
         }

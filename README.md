@@ -9,19 +9,29 @@
 
 ## Using
 
-You can run the program only with IDE
+You can run the program with IDE
 
 Then you should write commands
 
 For example
 
-```find KEY``` or
+```containsKey KEY``` or
 
-```change KEY VALUE``` or
+```set KEY VALUE``` or
 
 ```size```
 
 where KEY and VALUE is a strings
+
+Or if you can do operations by writing it in run args
+
+For example
+
+```./gradlew run --args="containsKey KEY"``` or
+
+```./gradlew run --args="set KEY VALUE containsKey KEY VALUE"``` or 
+
+```./gradlew run --args="size values clear"```
 
 ---
 
