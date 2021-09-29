@@ -26,7 +26,7 @@ fun setSetting(name: String, value: String) {
 }
 
 fun loadSettingsFromFile(fileName: String) {
-    for (str in File(fileName).readLines()) {
+    for (str in File(fileName).readLines().map { it.substringBefore('#') }) {
         if (str.isBlank()) continue
         val arg = str.filter { !it.isWhitespace() }
         val optionName = arg.substringBefore('=')
