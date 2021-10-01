@@ -56,7 +56,7 @@ fun doOperation(input: List<String>) {
         "size" -> db.size()
         "is-empty" -> db.isEmpty()
         "clear" -> db.clear()
-        "values" -> db.values()
+        "values" -> db.outputValues()
         else -> {
             throwError("Forgot to add function"); return
         }

@@ -42,6 +42,9 @@ val NAME_OF_FUNCTIONS = mapOf(
     "value" to "values"
 )
 
+/** Enable output for all functions */
+var OUTPUT = true
+
 /** Separator in every file*/
 var SEPARATOR = '='
 

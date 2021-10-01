@@ -1,14 +1,24 @@
 import java.io.File
 
-fun setSeparator(value: String) {
+fun getBooleanFromString(value: String): Boolean {
+    return when (value) {
+        "false" -> false
+        "true" -> true
+        else -> {
+            throwError("Wrong value, should be Boolean type($value)", true); false
+        }
+    }
+}
+
+fun getCharFromString(value: String): Char {
     if (value.length != 1) {
         throwError("Wrong separator value($value)", true)
     }
-    SEPARATOR = value.first()
+    return value.first()
 }
 
 /** Convert string[value] to ULong or throw exception */
-fun getULongFromString(value: String)  : ULong {
+fun getULongFromString(value: String): ULong {
     val intValue = value.toULongOrNull()
     if (intValue == null) {
         throwError("Wrong value, should be ULong type($value)", true)
@@ -18,7 +28,8 @@ fun getULongFromString(value: String)  : ULong {
 
 fun setSetting(name: String, value: String) {
     when (name) {
-        "SEPARATOR" -> setSeparator(value)
+        "OUTPUT" -> OUTPUT = getBooleanFromString(value)
+        "SEPARATOR" -> SEPARATOR = getCharFromString(value)
         "MAX_FILE_SIZE" -> MAX_FILE_SIZE = getULongFromString(value)
         "PATH_DATA_DIRECTORY" -> PATH_DATA_DIRECTORY = value
         "MODULE" -> MODULE = getULongFromString(value)

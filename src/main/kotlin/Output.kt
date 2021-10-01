@@ -1,3 +1,5 @@
 fun outputString(str: String) {
-    println(str)
+    if (OUTPUT) {
+        println(str)
+    }
 }

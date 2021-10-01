@@ -1,11 +1,14 @@
+# Enable output for all functions
+OUTPUT = true
+
 # separator in database
 SEPARATOR = =
 
 # max size of file, in bytes
-MAX_FILE_SIZE = 20
+MAX_FILE_SIZE = 134217728
 
 # path to data directory
-PATH_DATA_DIRECTORY = data/
+PATH_DATA_DIRECTORY = testData/TestBigData
 
 # module for calculating hash of strings
 MODULE = 576460752303423619 # big prime module ~= 5e17
