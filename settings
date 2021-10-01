@@ -12,3 +12,5 @@ MODULE = 576460752303423619 # big prime module ~= 5e17
 
 # coefficient for calculating hash of strings
 COEFFICIENT = 97 # should be more than alphabet size
+
+# GCD(MODULE, COEFFICIENT) should be equals to 1
