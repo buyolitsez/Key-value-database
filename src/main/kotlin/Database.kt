@@ -148,29 +148,31 @@ class Database {
     }
 
     /** Output "true" if [key] is in database, and "false" otherwise*/
-    fun containsKey(key: ULong) {
+    fun containsKey(key: ULong): Boolean {
         val startNum = currentFile
         do {
             if (data.contains(key)) {
                 outputString("true")
-                return
+                return true
             }
             getNextPart()
         } while (currentFile != startNum)
         outputString("false")
+        return false
     }
 
     /** Output value, is [key] is in database, and "No such key" otherwise. */
-    fun get(key: ULong) {
+    fun get(key: ULong): String {
         val startNum = currentFile
         do {
             if (data.contains(key)) {
                 outputString(data[key]!!)
-                return
+                return data[key]!!
             }
             getNextPart()
         } while (currentFile != startNum)
         outputString("No such key")
+        return ""
     }
 
     /** Set [key] to [value] in database*/
@@ -217,7 +219,7 @@ class Database {
     }
 
     /** Output size of database*/
-    fun size() {
+    fun size(): ULong {
         var totalSize: ULong = 0U
         val startNum = currentFile
         do {
@@ -225,19 +227,21 @@ class Database {
             getNextPart()
         } while (currentFile != startNum)
         outputString(totalSize.toString())
+        return totalSize
     }
 
     /** Output "true" if database is empty and "false" otherwise. */
-    fun isEmpty() {
+    fun isEmpty(): Boolean {
         val startNum = currentFile
         do {
             if (data.isNotEmpty()) {
                 outputString("false")
-                return
+                return false
             }
             getNextPart()
         } while (currentFile != startNum)
         outputString("true")
+        return true
     }
 
     /** Remove all records in database*/
@@ -252,7 +256,7 @@ class Database {
     }
 
     /** Output all database values */
-    fun values() {
+    fun outputValues() {
         val startNum = currentFile
         do {
             for ((_, value) in data) {
