@@ -30,6 +30,7 @@ class Database {
     KEY=VALUE\n = key. Length + separator + value. Length + new line character
      * */
     private fun getSizeOfRecord(key: ULong): ULong {
+        require (data.containsKey(key)) {"data must contains key($key)"}
         return key.toString().length.toULong() + 1U + data[key]!!.length.toULong() + 1U
     }
 
@@ -71,7 +72,7 @@ class Database {
      * If there is no files, we suppose that there is one(we'll create it later)
      */
     private fun calculateNumberOfFiles() {
-        // We can use !! and there is can't be an error, otherwise we'll throw exception in [deleteEmptyFiles] function
+        require(File(PATH_DATA_DIRECTORY).list() != null) {"Unknown state with directory $PATH_DATA_DIRECTORY"}
         totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
         if (totalCountOfFiles == 0) {
             currentFile = 0
@@ -132,6 +133,8 @@ class Database {
      * After 1 part is a 1 part
      */
     private fun getNextPart() {
+        require(totalCountOfFiles > 0)
+        require(currentFile >= 0)
         val wasNumFile = currentFile
         uploadPartDatabase()
         loadPartDatabaseFromFile(wasNumFile % totalCountOfFiles + 1)
