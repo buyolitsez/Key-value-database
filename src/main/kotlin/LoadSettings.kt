@@ -39,11 +39,14 @@ fun setSetting(name: String, value: String) {
 }
 
 fun loadSettingsFromFile(fileName: String) {
-    for (str in File(fileName).readLines().map { it.substringBefore('#') }) {
-        if (str.isBlank()) continue
-        val arg = str.filter { !it.isWhitespace() }
-        val optionName = arg.substringBefore('=')
-        val optionValue = arg.substringAfter('=')
-        setSetting(optionName, optionValue)
-    }
+    File(fileName).readLines()
+        .map { it.substringBefore('#') }
+        .filter { it.isNotBlank() }
+        .forEach { str ->
+            if (str.isBlank()) return@forEach
+            val arg = str.filter { !it.isWhitespace() }
+            val optionName = arg.substringBefore('=')
+            val optionValue = arg.substringAfter('=')
+            setSetting(optionName, optionValue)
+        }
 }
