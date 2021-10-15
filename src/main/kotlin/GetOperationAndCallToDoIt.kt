@@ -91,12 +91,21 @@ fun startOperation(args: Array<String>) {
         startOperationFromArgs(args)
         return
     }
+    outputStringWithColor("command: ")
     var str: String?
     while (true) {
         str = readLine()
         if (str != null) {
             val input = str.split(' ').filter { it.isNotBlank() }
             doOperation(input)
+            outputStringWithColor("command: ")
         }
     }
 }
+
+fun outputStringWithColor(string: String) {
+    val color = "\u001B[36m"
+    val reset = "\u001B[0m"
+    print(color + string + reset)
+}
+

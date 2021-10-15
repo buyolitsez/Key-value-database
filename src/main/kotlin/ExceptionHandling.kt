@@ -6,4 +6,5 @@ fun throwError(error: String, exitProcess : Boolean = false) {
         db.exit()
         exitProcess(-1)
     }
+    Thread.sleep(150) // cause system.err works a bit slower
 }
