@@ -42,9 +42,9 @@ You can see some variants for function names, you can use one, that you prefer
 + ```exit``` - exit from database interface
 
 * ```containsKey [KEY]``` - checks if the database contains the given key(true or false).
-* ```find``` 
+* ```find```
 
-+ ```get [KEY]``` - output ```Can't find key``` if key doesn't exist, or the value of key.
++ ```get [KEY]``` - output ```No such key``` if key doesn't exist, or the value of key.
 
 * ```set [KEY] [VALUE]``` - set the value of KEY to VALUE.
 * ```change```
