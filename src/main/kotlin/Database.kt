@@ -1,15 +1,6 @@
 import java.io.File
 import java.io.InputStream
 
-/** Return file from it number */
-fun getFileByNum(num: Int): File {
-    val file = File("$PATH_DATA_DIRECTORY$num")
-    if (!file.exists()) {
-        file.createNewFile()
-    }
-    return file
-}
-
 class Database {
     // 0 means that data is not loaded yet
     private var currentFile = 0
@@ -24,6 +15,15 @@ class Database {
         correctDirectory()
         calculateNumberOfFiles()
         loadPartDatabaseFromFile(1)
+    }
+
+    /** Return file from it number */
+    private fun getFileByNum(num: Int): File {
+        val file = File("$PATH_DATA_DIRECTORY$num")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+        return file
     }
 
     /** get size of record in bytes
@@ -72,8 +72,9 @@ class Database {
      * If there is no files, we suppose that there is one(we'll create it later)
      */
     private fun calculateNumberOfFiles() {
-        require(File(PATH_DATA_DIRECTORY).list() != null) { "Unknown state with directory $PATH_DATA_DIRECTORY" }
-        totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
+        val listFromPath = File(PATH_DATA_DIRECTORY).list()
+        require(listFromPath != null) { "Unknown state with directory $PATH_DATA_DIRECTORY" }
+        totalCountOfFiles = listFromPath.size
         if (totalCountOfFiles == 0) {
             currentFile = 0
             totalCountOfFiles = 1
