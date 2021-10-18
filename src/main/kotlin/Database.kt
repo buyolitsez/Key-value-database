@@ -30,7 +30,7 @@ class Database {
     KEY=VALUE\n = key. Length + separator + value. Length + new line character
      * */
     private fun getSizeOfRecord(key: ULong): ULong {
-        require (data.containsKey(key)) {"data must contains key($key)"}
+        require(data.containsKey(key)) { "data must contains key($key)" }
         return key.toString().length.toULong() + 1U + data[key]!!.length.toULong() + 1U
     }
 
@@ -72,7 +72,7 @@ class Database {
      * If there is no files, we suppose that there is one(we'll create it later)
      */
     private fun calculateNumberOfFiles() {
-        require(File(PATH_DATA_DIRECTORY).list() != null) {"Unknown state with directory $PATH_DATA_DIRECTORY"}
+        require(File(PATH_DATA_DIRECTORY).list() != null) { "Unknown state with directory $PATH_DATA_DIRECTORY" }
         totalCountOfFiles = File(PATH_DATA_DIRECTORY).list()!!.size
         if (totalCountOfFiles == 0) {
             currentFile = 0
@@ -147,32 +147,50 @@ class Database {
         correctDirectory()
     }
 
-    /** Output "true" if [key] is in database, and "false" otherwise*/
-    fun containsKey(key: ULong): Boolean {
+    private fun iterateOverDatabase(
+        key: ULong,
+        value: String,
+        checkStatement: (ULong, String) -> Boolean,
+        DoIf: (Boolean) -> Unit
+    ) {
         val startNum = currentFile
         do {
-            if (data.contains(key)) {
-                outputString("true")
-                return true
+            if (checkStatement(key, value)) {
+                DoIf(true)
+                return
             }
             getNextPart()
         } while (currentFile != startNum)
-        outputString("false")
-        return false
+        DoIf(false)
+    }
+
+    /** Output "true" if [key] is in database, and "false" otherwise*/
+    fun containsKey(key: ULong): Boolean {
+        var result = false
+        iterateOverDatabase(key, "-", fun(key: ULong, _: String): Boolean {
+            return data.contains(key)
+        }, fun(statement: Boolean) {
+            result = statement
+        })
+        outputString(result.toString())
+        return result
     }
 
     /** Output value, is [key] is in database, and "No such key" otherwise. */
     fun get(key: ULong): String {
-        val startNum = currentFile
-        do {
-            if (data.contains(key)) {
-                outputString(data[key]!!)
-                return data[key]!!
+        var result = "No such key"
+        iterateOverDatabase(key, "-", fun(key: ULong, _: String): Boolean {
+            return data.contains(key)
+        }, fun(statement: Boolean) {
+            if (statement) {
+                result = data[key]!!.toString()
+                outputString(result)
+            } else {
+                outputString(result)
+                result = ""
             }
-            getNextPart()
-        } while (currentFile != startNum)
-        outputString("No such key")
-        return ""
+        })
+        return result
     }
 
     /** Set [key] to [value] in database*/
@@ -181,89 +199,84 @@ class Database {
             throwError("Too big record, to write in a one file\n $key=$value")
             return
         }
-        val startNum = currentFile
         var notFullPart = 0
-        // Try to find key
-        do {
+        iterateOverDatabase(key, value, fun(key: ULong, value: String): Boolean {
             if (data.contains(key)) {
                 data[key] = value
-                return
+                return true
             }
             if (currentSizeInBytes + getSizeOfRecord(key, value) < MAX_FILE_SIZE) {
                 notFullPart = currentFile
             }
-            getNextPart()
-        } while (currentFile != startNum)
-        if (notFullPart == 0) {
-            createNewPart()
-        } else {
-            uploadPartDatabase()
-            loadPartDatabaseFromFile(notFullPart)
-        }
-        data[key] = value
-        currentSizeInBytes += getSizeOfRecord(key, value)
+            return false
+        }, fun(statement: Boolean) {
+            if (!statement) {
+                if (notFullPart == 0) {
+                    createNewPart()
+                } else {
+                    uploadPartDatabase()
+                    loadPartDatabaseFromFile(notFullPart)
+                }
+                data[key] = value
+                currentSizeInBytes += getSizeOfRecord(key, value)
+            }
+        })
     }
 
     /** Remove value by [key]
      * If there is no [key], we don't do anything.*/
     fun removeKey(key: ULong) {
-        val startNum = currentFile
-        do {
-            if (data.contains(key)) {
+        iterateOverDatabase(key, "-", fun(key: ULong, _: String): Boolean {
+            return data.contains(key)
+        }, fun(statement: Boolean) {
+            if (statement) {
                 currentSizeInBytes -= getSizeOfRecord(key)
                 data.remove(key)
-                return
             }
-            getNextPart()
-        } while (currentFile != startNum)
+        })
     }
 
     /** Output size of database*/
     fun size(): ULong {
         var totalSize: ULong = 0U
-        val startNum = currentFile
-        do {
+        iterateOverDatabase(0U, "-", fun(key: ULong, _: String): Boolean {
             totalSize += data.size.toULong()
-            getNextPart()
-        } while (currentFile != startNum)
+            return false
+        },
+            fun(_: Boolean) {})
         outputString(totalSize.toString())
         return totalSize
     }
 
     /** Output "true" if database is empty and "false" otherwise. */
     fun isEmpty(): Boolean {
-        val startNum = currentFile
-        do {
-            if (data.isNotEmpty()) {
-                outputString("false")
-                return false
-            }
-            getNextPart()
-        } while (currentFile != startNum)
-        outputString("true")
-        return true
+        var result = true
+        iterateOverDatabase(0U, "-", fun(_: ULong, _: String): Boolean { return data.isNotEmpty() },
+            fun(statement: Boolean) {
+                result = !statement
+            })
+        outputString(result.toString())
+        return result
     }
 
     /** Remove all records in database*/
     fun clear() {
-        val startNum = currentFile
-        do {
+        iterateOverDatabase(0U, "-", fun(_: ULong, _: String): Boolean {
             data.clear()
-            getNextPart()
-        } while (currentFile != startNum)
+            return false
+        }, fun(_: Boolean) {})
         correctDirectory()
         totalCountOfFiles = 1
     }
 
     /** Output all database values */
     fun outputValues() {
-        val startNum = currentFile
-        do {
+        iterateOverDatabase(0U, "-", fun(_: ULong, _: String): Boolean {
             for ((_, value) in data) {
                 outputString(value)
             }
-            getNextPart()
-        } while (currentFile != startNum)
+            return false
+        }, fun(_: Boolean) {})
     }
 }
 

@@ -8,7 +8,7 @@ SEPARATOR = =
 MAX_FILE_SIZE = 134217728
 
 # path to data directory
-PATH_DATA_DIRECTORY = testData/TestBigData
+PATH_DATA_DIRECTORY = data
 
 # module for calculating hash of strings
 MODULE = 576460752303423619 # big prime module ~= 5e17
