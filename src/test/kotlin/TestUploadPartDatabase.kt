@@ -1,11 +1,15 @@
 import java.io.File
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class TestUploadPartDatabase {
     @BeforeTest
     fun setConstants() = run {
         PATH_DATA_DIRECTORY = "testData/TestUploadPartDatabase/"
         MAX_FILE_SIZE = 10U
+        SEPARATOR = '='
         File("${PATH_DATA_DIRECTORY}1").writeText("") // Clear output file
     }
 

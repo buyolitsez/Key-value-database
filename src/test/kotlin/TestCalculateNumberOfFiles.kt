@@ -1,7 +1,17 @@
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
 internal class TestCalculateNumberOfFiles {
+    @BeforeTest
+    fun setAllBefore() = run {
+        SEPARATOR = '='
+        MAX_FILE_SIZE = 7U
+    }
+
     @AfterTest
-    fun setAll() = run {
+    fun setAllAfter() = run {
         setDefaultValues()
     }
 

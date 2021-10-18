@@ -3,10 +3,14 @@ package testDatabaseOperations
 import Database
 import MAX_FILE_SIZE
 import PATH_DATA_DIRECTORY
+import SEPARATOR
 import setDefaultValues
-import kotlin.test.*
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class TestSizeDBOperation {
     private val standardOut = System.out
@@ -19,6 +23,7 @@ internal class TestSizeDBOperation {
 
     @BeforeTest
     fun setConstants() = run {
+        SEPARATOR = '='
         PATH_DATA_DIRECTORY = "testData/TestDatabaseOperations"
         MAX_FILE_SIZE = 100U
     }
