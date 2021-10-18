@@ -26,18 +26,6 @@ class Database {
         return file
     }
 
-    /** get size of record in bytes
-    KEY=VALUE\n = key. Length + separator + value. Length + new line character
-     * */
-    private fun getSizeOfRecord(key: ULong): ULong {
-        require(data.containsKey(key)) { "data must contains key($key)" }
-        return key.toString().length.toULong() + 1U + data[key]!!.length.toULong() + 1U
-    }
-
-    private fun getSizeOfRecord(key: ULong, value: String): ULong {
-        return key.toString().length.toULong() + 1U + value.length.toULong() + 1U
-    }
-
     /** Reduce files in path */
     private fun correctDirectory() {
         deleteEmptyFiles()
@@ -278,6 +266,18 @@ class Database {
             }
             return false
         }, fun(_: Boolean) {})
+    }
+
+    /** get size of record in bytes
+    KEY=VALUE\n = key. Length + separator + value. Length + new line character
+     * */
+    private fun getSizeOfRecord(key: ULong): ULong {
+        require(data.containsKey(key)) { "data must contains key($key)" }
+        return key.toString().length.toULong() + 1U + data[key]!!.length.toULong() + 1U
+    }
+
+    private fun getSizeOfRecord(key: ULong, value: String): ULong {
+        return key.toString().length.toULong() + 1U + value.length.toULong() + 1U
     }
 }
 
