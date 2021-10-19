@@ -16,12 +16,11 @@ fun readArgs(args: List<String>): Operation? {
         throwError("No args")
         return null
     }
-    var nameOperation = args[0].trim()
-    if (!NAME_OF_FUNCTIONS.containsKey(nameOperation)) {
-        throwError("Dont know $nameOperation operation")
+    val nameOperation = NAME_OF_FUNCTIONS[args[0].trim()]
+    if (nameOperation == null) {
+        throwError("Dont know operation")
         return null
     }
-    nameOperation = NAME_OF_FUNCTIONS[nameOperation]!!
     if (args.size != FUNCTIONS[nameOperation]!! + 1) {
         throwError("Wrong count of data")
         return null

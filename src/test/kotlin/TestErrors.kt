@@ -44,7 +44,7 @@ internal class TestErrors {
     @Test
     fun testUnknownOperation() {
         readArgs(listOf("trash"))
-        assertEquals("Dont know trash operation", stream.toString().trim())
+        assertEquals("Dont know operation", stream.toString().trim())
     }
 
     @Test
